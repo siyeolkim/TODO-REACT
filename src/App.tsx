@@ -10,17 +10,22 @@ type Todo = {
 };
 
 const TodoApp = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editValue, setEditValue] = useState<string>('');
 
-  useEffect(() => {
-    const savedTodos = localStorage.getItem('todos');
-    if (savedTodos) {
-      setTodos(JSON.parse(savedTodos));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedTodos = localStorage.getItem('todos');
+  //   if (savedTodos) {
+  //     setTodos(JSON.parse(savedTodos));
+  //   }
+  // }, []);
+
+  const savedTodosFromLocalStorage = localStorage.getItem('todos');
+  const initialTodos = savedTodosFromLocalStorage ? JSON.parse(savedTodosFromLocalStorage) : [];
+
+  const [todos, setTodos] = useState<Todo[]>(initialTodos);
+
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
